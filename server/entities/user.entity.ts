@@ -1,6 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { RefreshToken } from './refresh_token.entity';
 import { UserRole } from './user_role.entity';
+import { UserProject } from './user_project.entity';
 
 @Entity()
 export class User {
@@ -24,4 +25,7 @@ export class User {
 
   @OneToMany(() => UserRole, (userRole) => userRole.user, { cascade: true })
   userRoles: UserRole[];
+
+  @OneToMany(() => UserProject, (userProject) => userProject.user, { cascade: true})
+  userProjects: UserProject[];
 }
