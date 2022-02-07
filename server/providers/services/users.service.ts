@@ -34,6 +34,10 @@ export class UsersService {
     return this.usersRespository.save(user);
   }
 
+  update(user : User) {
+    return this.usersRespository.update(user.id, user);
+  }
+
   async verify(email: string, password: string) {
     const user = await this.usersRespository.findOne({ email }, { relations: ['refreshTokens', 'userRoles'] });
     if (!user) return { verified: false, user: null };

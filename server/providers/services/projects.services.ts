@@ -25,6 +25,10 @@ export class ProjectsService {
   }
 
   removeProject(project : Project) {
-    this.projectRepository.delete(project);
+    return this.projectRepository.delete(project);
+  }
+
+  updateProject(project : Project) {
+    return this.projectRepository.update(project.id, project);
   }
 }
