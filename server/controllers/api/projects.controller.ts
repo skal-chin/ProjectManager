@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, HttpException, Param, Post, Put } from '@nestjs/common';
 import { JwtBody } from 'server/decorators/jwt_body.decorator';
 import { JwtBodyDto } from 'server/dto/jwt_body.dto';
-import { User } from 'server/entities/user.entities';
+import { User } from 'server/entities/user.entity';
 import { Project } from 'server/entities/project.entity';
 import { UserProject } from 'server/entities/user_project.entity';
 import { UsersService } from 'server/providers/services/users.service'
@@ -44,7 +44,7 @@ export class ProjectsController {
     project.ownerId = jwtBody.userId;
     project = await this.projectsService.createProject(project);
     
-    const currentUser = this.usersService.find(jwtBody.userId);
+    const currentUser = await this.usersService.find(jwtBody.userId);
     const newUserProject = new UserProject();
     newUserProject.projectId = project.id;
     newUserProject.userId = currentUser.id;
