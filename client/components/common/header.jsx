@@ -1,7 +1,19 @@
-export const Header = ({ children, ...other}) => {
+import { Link } from "memfs/lib/node";
+import { Button } from "./button";
+
+export const Header = ({ logout, currentUser, projectTitle, projectOwner}) => {
   return (
-    <div className="rounded -b-lg bg-pink-500 text-black flex-1 h-24">
-      <div>{children}</div>
+    <div className="font-bold text-xl flex justify-between rounded-b-lg bg-pink-500 text-black h-24">
+      <div className="m-2 flex-col">
+        <div><a href="/" className="p-1">{ currentUser }</a></div>
+        <div><button className="p-1" type="button" onClick={logout}>Logout</button></div>
+      </div>
+      {projectOwner && 
+      <div className="m-2 flex-col">
+        <div className="p-1">{ projectTitle }</div>
+        <div className="p-1">{ projectOwner }</div>
+      </div>
+      }
 
     </div>
   );

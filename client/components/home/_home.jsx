@@ -47,6 +47,6 @@ export const Home = () => {
   // );
 
   return (
-    <Header >{user.firstName}</Header>
+    <Header logout={logout} currentUser={user.firstName} ></Header>
   );
 };
