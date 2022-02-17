@@ -5,6 +5,7 @@ import { AuthContext } from '../../utils/auth_context';
 import { RolesContext } from '../../utils/roles_context';
 import { Button } from '../common/button';
 import { Header } from '../common/header';
+import { CreateButton } from '../common/create_button';
 
 export const Home = () => {
   const [, setAuthToken] = useContext(AuthContext);
@@ -15,6 +16,8 @@ export const Home = () => {
 
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
+  const [projectModal, setModal] = useState(false);
+  
   useEffect(async () => {
     const res = await api.get('/users/me');
     setUser(res.user);
@@ -26,6 +29,10 @@ export const Home = () => {
     if (res.success) {
       setAuthToken(null);
     }
+  };
+
+  const openProjectModal = async => {
+    setModal(true);
   };
 
   if (loading) {
@@ -47,6 +54,10 @@ export const Home = () => {
   // );
 
   return (
-    <Header logout={logout} currentUser={user.firstName} ></Header>
+    <div>
+      <Header logout={logout} currentUser={user.firstName} ></Header>
+      <CreateButton desc="Project" onClick={ openProjectModal }></CreateButton>
+
+    </div>
   );
 };
