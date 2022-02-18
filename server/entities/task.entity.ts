@@ -1,34 +1,26 @@
-import { Column, Entity, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { UserRole } from './user_role.entity.ts';
-import { UserProject } from './user_project.entity.ts';
-import internal from 'stream';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Task {
   @PrimaryGeneratedColumn()
-  title: string;
-
-  @Column({ })
-  description: string;
-
-  @Column({ })
-  deadline: Date;
-
-  @Column({ })
   id: Number;
 
-  @Column({ })
+  @Column({ nullable: false })
+  description: string;
+
+  @Column({ nullable: false })
+  deadline: string;
+
+  @Column({ nullable: false })
+  title: string;
+
+  @Column({ nullable: false })
   isComplete: Boolean;
 
-  @Column({ })
+  @Column({ nullable: false })
   assignedTo: number;
 
-  @Column({ })
+  @Column({ nullable: false })
   projectId: number;
 
-  @ManyToOne(() => UserProject, (userProject) => userProject.user, { cascade: true})
-  userProject: UserProject[];
-
-  @ManyToOne(() => UserRole, (userRole) => userRole.user, { cascade: true})
-  userRoles: UserRole[];
 }
