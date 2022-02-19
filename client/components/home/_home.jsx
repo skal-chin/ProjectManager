@@ -6,6 +6,7 @@ import { RolesContext } from '../../utils/roles_context';
 import { Button } from '../common/button';
 import { Header } from '../common/header';
 import { CreateButton } from '../common/create_button';
+import { CreationModal } from '../common/creation_modal';
 
 export const Home = () => {
   const [, setAuthToken] = useContext(AuthContext);
@@ -57,6 +58,8 @@ export const Home = () => {
     <div>
       <Header logout={logout} currentUser={user.firstName} ></Header>
       <CreateButton desc="Project" onClick={ openProjectModal }></CreateButton>
+
+      <CreationModal createType="Project"></CreationModal>
 
     </div>
   );
