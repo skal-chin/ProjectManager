@@ -27,4 +27,8 @@ export class Task {
   deleteTask(task: Task) {
     this.taskRepository.delete(task);
   }
+
+  updateTask(task : Task) {
+    return this.taskRepository.update(task.id, task);
+  }
 }

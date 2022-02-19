@@ -37,4 +37,12 @@ export class TasksController {
     this.tasksService.removeTask(task);
     return { success: true };
   }
+
+  @Put('/taskss/:id')
+  public async update(@Param('id') id : string, @JwtBody() jwtBody : JwtBodyDto) {
+    const task = await this.tasksService.findTaskById(parseInt(id, 10));
+
+    this.tasksService.updateTask(tasks);
+    return { success : true }
+  }
 }
