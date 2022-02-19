@@ -25,7 +25,7 @@ export class AddTask1644290611878 implements MigrationInterface {
 						},
 						{
 						name: 'title',
-						type: 'string',
+						type: 'text',
 						isNullable: false,
 						},
 						{
