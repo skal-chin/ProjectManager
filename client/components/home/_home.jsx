@@ -6,7 +6,8 @@ import { RolesContext } from '../../utils/roles_context';
 import { Button } from '../common/button';
 import { Header } from '../common/header';
 import { CreateButton } from '../common/create_button';
-import { CreationModal } from '../common/creation_modal';
+// import { CreationModal } from '../common/creation_modal';
+import { Card } from '../common/card';
 
 export const Home = () => {
   const [, setAuthToken] = useContext(AuthContext);
@@ -17,7 +18,7 @@ export const Home = () => {
 
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
-  const [projectModal, setModal] = useState(false);
+  // const [projectModal, setModal] = useState(false);
   
   useEffect(async () => {
     const res = await api.get('/users/me');
@@ -32,9 +33,9 @@ export const Home = () => {
     }
   };
 
-  const openProjectModal = async => {
-    setModal(true);
-  };
+  // const openProjectModal = async => {
+  //   setModal(true);
+  // };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -57,9 +58,12 @@ export const Home = () => {
   return (
     <div>
       <Header logout={logout} currentUser={user.firstName} ></Header>
-      <CreateButton desc="Project" onClick={ openProjectModal }></CreateButton>
+      {/* <CreateButton desc="Project" onClick={ openProjectModal }></CreateButton> */}
 
-      <CreationModal createType="Project"></CreationModal>
+      {/* <CreationModal createType="Project"></CreationModal> */}
+
+      <Card Title="This is a Title" Description="Some description that is longer and longer so I can see how it's going to fit in the context of the box. I want it to be longer so I can decide where to put the status button of this task card thing that I've been put in charge of." 
+      Deadline="None" isAssigned="chin"></Card>
 
     </div>
   );
