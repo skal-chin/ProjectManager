@@ -11,8 +11,8 @@ class ProjectPostBody {
   title : string;
   description : string;
   deadline : string;
-  isComplete : boolean;
   ownerId : number;
+  userInvite : string;
 }
 
 @Controller()
@@ -42,15 +42,32 @@ export class ProjectsController {
     project.deadline = body.deadline;
     project.isComplete = false;
     project.ownerId = jwtBody.userId;
-    project = await this.projectsService.createProject(project);
     
     const currentUser = await this.usersService.find(jwtBody.userId);
     const newUserProject = new UserProject();
     newUserProject.projectId = project.id;
     newUserProject.userId = currentUser.id;
+    newUserProject.contextId = Math.random.toString().substring(2, 8);
 
-    currentUser.userProjects = [...currentUser.userProjects, newUserProject];
+    project.userProjects = [newUserProject];
+    currentUser.userProjects = [newUserProject];
+    console.log('UserProject Added');
+    
+
+    // currentUser.userProjects = [...currentUser.userProjects, newUserProject];
     this.usersService.update(currentUser);
+    console.log('After User update');
+    
+    // project = await this.projectsService.createProject(project);
+    console.log('After project create');
+    
+
+    if (body.userInvite) {
+      const otherUser = await this.usersService.findByEmail(body.userInvite)[0];
+      otherUser.userProjects = [...otherUser.userProjects, newUserProject];
+      this.usersService.update(otherUser);
+    }
+
     return { project };
   }
 

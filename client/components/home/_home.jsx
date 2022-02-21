@@ -17,6 +17,8 @@ export const Home = () => {
 
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
+
+  const [projects, setProjects] = useState([])
   const [projectModal, setModal] = useState(false);
   
   useEffect(async () => {
@@ -34,6 +36,10 @@ export const Home = () => {
 
   const openProjectModal = async => {
     setModal(true);
+  };
+
+  const closeProjectModal = async => {
+    setModal(false);
   };
 
   if (loading) {
@@ -59,7 +65,15 @@ export const Home = () => {
       <Header logout={logout} currentUser={user.firstName} ></Header>
       <CreateButton desc="Project" onClick={ openProjectModal }></CreateButton>
 
-      <CreationModal createType="Project"></CreationModal>
+      {projectModal &&
+        <CreationModal 
+          createType="Project" 
+          cancel={ closeProjectModal }
+          currentProjects={ projects }
+          getProject={ setProjects }>
+        </CreationModal>
+
+      }
 
     </div>
   );

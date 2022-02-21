@@ -1,5 +1,6 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, HttpStatus, Param, Post, Res } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
+import bodyParser from 'body-parser';
 import { Response } from 'express';
 import { JwtBody } from 'server/decorators/jwt_body.decorator';
 import { Roles } from 'server/decorators/roles.decorator';
@@ -16,6 +17,10 @@ import { RefreshTokensService } from 'server/providers/services/refresh_tokens.s
 import { RolesService } from 'server/providers/services/roles.service';
 import { UsersService } from 'server/providers/services/users.service';
 
+class ByEmailBody {
+  email : string;
+}
+
 @Controller()
 export class UsersController {
   constructor(
@@ -30,6 +35,18 @@ export class UsersController {
   async index() {
     const users = await this.usersService.findAll();
     return { users };
+  }
+
+  @Get('/other_user/:email')
+  async getUser(@Param('email') userEmail : string) {       
+    const user = await this.usersService.findByEmail(userEmail);
+    console.log(user);
+    
+    if (user[0]) {
+      return {success: true};
+    }
+
+    return { success: false};
   }
 
   @Get('/users/me')
