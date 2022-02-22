@@ -9,7 +9,7 @@ export const Card = ({ isProject, Title, Description, Deadline, isAssigned, owne
 
   return (
 
-    <div className="bg-white pt-3 pl-3 pr-3 m-2 shadow-md rounded-lg">
+    <div className="bg-indigo-200 pt-3 pl-3 pr-3 m-2 shadow-md rounded-lg">
       <div className="flex justify-between mb-2">
         <span className="align-text-left text-2xl pb-1">{ Title }</span>
         <button onClick={isComplete} className={check ? "bg-purple-400 hover:bg-purple-500 text-white text-center py-1 px-3 rounded-full" :

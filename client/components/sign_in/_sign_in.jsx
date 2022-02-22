@@ -37,12 +37,20 @@ export const SignIn = () => {
 
   return (
     <div className="flex flex-row justify-center m-4">
-      <div className="w-96">
+      <div className="w-96 bg-indigo-200">
         <Paper>
           <div>Email</div>
-          <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <input className={"border-2 border-indigo-400 border-r m-1 p-1 focus:outline-none"} 
+            type="email" 
+            value={email} 
+            onChange={(e) => setEmail(e.target.value)} />
+          
           <div>Password</div>
-          <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          <input className={"border-2 border-indigo-400 border-r m-1 p-1 focus:outline-none"}
+            type="password" 
+            value={password} 
+            onChange={(e) => setPassword(e.target.value)} />
+          
           <div className="flex flex-row justify-end mt-2">
             <Button type="button" onClick={goToSignUp}>
               Sign up
