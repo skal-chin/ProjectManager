@@ -20,6 +20,9 @@ export class ProjectsService {
   //   });
   // }
 
+  findAll() {
+    return this.projectRepository.find();
+  }
   createProject(project : Project): Promise<Project> {
     return this.projectRepository.save(project);
   }
@@ -41,11 +44,7 @@ export class ProjectsService {
   }
 
   findAllForUser(userId : number) : Promise<UserProject[]> {
-    return this.userProjectsRepository.find({ relations : ['userProjects'], where : { id: userId }})
-  }
-
-  getUserProjects(projectId : number): Promise<Project[]> {
-    return this.projectRepository.find({relations : ['userProjects'], where : { id: projectId }});
+    return this.userProjectsRepository.find({ relations : ['project'], where : { userId: userId }})
   }
 
   addUserToProject(userId : number, projectId : number) {

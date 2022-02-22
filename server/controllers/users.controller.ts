@@ -40,7 +40,6 @@ export class UsersController {
   @Get('/other_user/:email')
   async getUser(@Param('email') userEmail : string) {       
     const user = await this.usersService.findByEmail(userEmail);
-    console.log(user);
     
     if (user[0]) {
       return {success: true};

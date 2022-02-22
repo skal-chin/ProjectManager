@@ -13,6 +13,7 @@ class ProjectPostBody {
   deadline : string;
   ownerId : number;
   userInvite : string;
+  isComplete : boolean;
 }
 
 @Controller()
@@ -25,10 +26,7 @@ export class ProjectsController {
   @Get('/projects')
   public async index(@JwtBody() jwtBody : JwtBodyDto) {
 
-    // const oprojects = await this.projectsService.findAllForUser(jwtBody.userId);
-    // console.log(oprojects);
-    
-    const projects = await this.projectsService.getUserProjects(jwtBody.userId);
+    const projects = await this.projectsService.findAllForUser(jwtBody.userId);
     console.log(projects);
     
     return { projects };
@@ -58,39 +56,34 @@ export class ProjectsController {
     newUserProject.contextId = Math.random.toString().substring(2, 8);
 
     await this.projectsService.createUserProject(newUserProject);
-
-
-
-    // project.userProjects = [newUserProject];
-    // console.log('Before Added');
     
-    // currentUser.userProjects = [...currentUser.userProjects, newUserProject];
-    // console.log('UserProject Added');
-    
-
-    // currentUser.userProjects = [...currentUser.userProjects, newUserProject];
-    // this.usersService.update(currentUser);
-    // console.log('After User update');
-    
-    // project = await this.projectsService.createProject(project);
-    // console.log('After project create');
-    
-
     if (body.userInvite) {
-      const otherUser = await this.usersService.findByEmail(body.userInvite)[0];
-      otherUser.userProjects = [...otherUser.userProjects, newUserProject];
-      this.usersService.update(otherUser);
+      console.log(body.userInvite);
+      
+      const getUser = await this.usersService.findByEmail(body.userInvite);
+      const otherUser = getUser[0];
+      
+      const otherUserProject = new UserProject();
+      otherUserProject.projectId = createdProject.id;
+      otherUserProject.userId = otherUser.id;
+      otherUserProject.contextId = Math.random.toString().substring(2, 8);
+      await this.projectsService.createUserProject(otherUserProject);
     }
 
     return { project };
   }
 
   @Put('/projects/:id')
-  public async update(@Param('id') id : string, @JwtBody() jwtBody : JwtBodyDto) {
+  public async update(@Param('id') id : string, @JwtBody() jwtBody : JwtBodyDto, @Body() body : ProjectPostBody) {
     const project = await this.projectsService.findProjectById(parseInt(id, 10));
     if (project.ownerId !== jwtBody.userId) {
       throw new HttpException('Unauthorized', 401);
     }
+
+    project.title = body.title;
+    project.description = body.description;
+    project.deadline = body.deadline;
+    project.isComplete = body.isComplete;
 
     this.projectsService.updateProject(project);
     return { success : true }

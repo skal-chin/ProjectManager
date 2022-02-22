@@ -34,7 +34,6 @@ export const Home = () => {
     setUser(res.user);
     setLoading(false);
     const proj = await api.get('projects/');
-    console.log(proj);
     setProjects(proj.projects);
   }, []);
 
@@ -114,7 +113,7 @@ export const Home = () => {
     };
 
     if (otherUser !== '') {
-      projectBody.otherUser = otherUser;
+      projectBody.userInvite = otherUser;
     }
 
     const project = await api.post('/projects', projectBody);
@@ -127,6 +126,20 @@ export const Home = () => {
     closeProjectModal();
     return;
   }
+
+  const setComplete = async (project) => {
+    project.isComplete = !project.isComplete;
+
+    const projectBody = {
+      title : project.title,
+      description : project.description,
+      deadline : project.deadline,
+      isComplete : project.isComplete,
+    }
+
+    const updatedProject = await api.put(`/projects/${project.id}`, projectBody);
+    return;
+  };
 
 
   return (
@@ -162,17 +175,19 @@ export const Home = () => {
       {projects.length > 0 &&
         <div>
           {projects.map((project) => (
-            <a href={"project/" + project.id}>
-              <Card
-                key={project.id}
-                isProject={true}
-                Title={project.title}
-                Description={project.description}
-                Deadline={project.deadline}
-              >
-              </Card>
+          
+            <Card
+              key={project.project.id}
+              isProject={true}
+              Title={project.project.title}
+              ProjectId={project.project.id}
+              Description={project.project.description}
+              Deadline={project.project.deadline}
+              isProjectComplete={project.project.isComplete}
+              setComplete={() => setComplete(project.project)}
+            >
+            </Card>
 
-            </a>
           ))}
         </div>
       }

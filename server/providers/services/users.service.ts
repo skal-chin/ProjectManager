@@ -39,8 +39,6 @@ export class UsersService {
   }
 
   update(user : User) {
-    console.log('In service update');
-    
     return this.usersRespository.update(user.id, user);
   }
 
