@@ -26,6 +26,10 @@ export class UsersService {
     return this.usersRespository.findOne(options, { relations });
   }
 
+  findByEmail(email : string) { 
+    return this.usersRespository.find({where: {email}});
+  }
+
   find(id: number, relations: string[] = []) {
     return this.usersRespository.findOne(id, { relations });
   }
@@ -35,6 +39,8 @@ export class UsersService {
   }
 
   update(user : User) {
+    console.log('In service update');
+    
     return this.usersRespository.update(user.id, user);
   }
 
