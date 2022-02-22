@@ -20,11 +20,20 @@ export const Home = () => {
 
   const [projects, setProjects] = useState([])
   const [projectModal, setModal] = useState(false);
+
+  const [title, setTitle] = useState('');
+  const [desc, setDesc] = useState('');
+  const [deadline, setDeadline] = useState('');
+  const [otherUser, setOtherUser] = useState('');
+  const [errorMessage, setError] = useState([]);
+  const [successMessage, setSuccess] = useState('');
   
   useEffect(async () => {
     const res = await api.get('/users/me');
     setUser(res.user);
     setLoading(false);
+    // const proj = await api.get('projects/');
+    // setProjects(proj);
   }, []);
 
   const logout = async () => {
@@ -60,6 +69,64 @@ export const Home = () => {
   //   </div>
   // );
 
+  // LOGIC FOR PROJECT CREATION
+  const submit = async () => {
+    setError([]);
+    let errors = [];
+    let isUser = false;
+
+    if (title === '') {
+      errors.push('Enter a title');
+      console.log(errors);
+    }
+
+    if (desc === '') {
+      errors.push('Enter a description');
+    }
+
+    if (deadline === '') {
+      errors.push('Enter a deadline');
+    }
+
+    if (otherUser !== '') {
+      const getUserBody = {
+        email: otherUser,
+      };
+      isUser = await api.get(`/other_user/${otherUser}`);
+      if (isUser.success === false) {
+        errors.push(`'${otherUser}' is not a user. Enter a valid user or leave 'Invite User' box empty.`)
+      }
+    }
+
+    console.log(errors);
+
+    if (errors.length !== 0) {
+      setError(errors);
+      return;
+    }
+    
+    const projectBody = {
+      title: title,
+      description: desc,
+      deadline: deadline
+    };
+
+    if (otherUser !== '') {
+      projectBody.otherUser = otherUser;
+    }
+
+    const project = await api.post('/projects', projectBody);
+
+    setProjects([...projects, project]);
+
+    if (project) {
+      setSuccess('Project Created! Make a new project or press cancel');
+    }
+    closeProjectModal();
+    return;
+  }
+
+
   return (
     <div>
       <Header logout={logout} currentUser={user.firstName} ></Header>
@@ -67,12 +134,42 @@ export const Home = () => {
 
       {projectModal &&
         <CreationModal 
-          createType="Project" 
+          createType="Project"
+          publish={ submit } 
           cancel={ closeProjectModal }
-          currentProjects={ projects }
-          getProject={ setProjects }>
+          setTitle={ setTitle }
+          setDesc={ setDesc }
+          setDeadline={ setDeadline }
+          setOtherUser={ setOtherUser }
+          errors={ errorMessage }
+          success={ successMessage }
+          >
         </CreationModal>
 
+      }
+      
+      {projects.length === 0 &&
+        <div className='bg-indigo-100 mx-24 my-4'>
+          <p className='flex justify-center'>You have no current projects</p>
+        </div>
+      }
+
+      {projects.length > 0 &&
+        <div>
+          {projects.map((project) => (
+            <a href={"project/" + project.id}>
+              <Card
+                key={project.id}
+                isProject={true}
+                Title={project.title}
+                Description={project.description}
+                Deadline={project.deadline}
+              >
+              </Card>
+
+            </a>
+          ))}
+        </div>
       }
 
     </div>

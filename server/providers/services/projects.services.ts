@@ -14,11 +14,11 @@ export class ProjectsService {
     private userProjectsRepository: Repository<UserProject>,
   ) {}
 
-  findAllForUser(userId : number) : Promise<Project[]> {
-    return this.projectRepository.find({
-      where : { userId },
-    });
-  }
+  // findAllForUser(userId : number) : Promise<Project[]> {
+  //   return this.projectRepository.find({
+  //     where : { userId },
+  //   });
+  // }
 
   createProject(project : Project): Promise<Project> {
     return this.projectRepository.save(project);
@@ -40,9 +40,10 @@ export class ProjectsService {
     return this.userProjectsRepository.save(userProject);
   }
 
-  // findAllForUser(userId : number) : Promise<UserProject[]> {
-  //   return this.userProjectsRepository.find({ where : { userId }});
-  // }
+  findAllForUser(userId : number) : Promise<UserProject[]> {
+    return this.userProjectsRepository.find({ where : { userId }})
+  }
+
   addUserToProject(userId : number, projectId : number) {
     const userProject = new UserProject();
     userProject.userId = userId;
