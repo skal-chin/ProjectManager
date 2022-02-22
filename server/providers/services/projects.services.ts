@@ -41,7 +41,11 @@ export class ProjectsService {
   }
 
   findAllForUser(userId : number) : Promise<UserProject[]> {
-    return this.userProjectsRepository.find({ where : { userId }})
+    return this.userProjectsRepository.find({ relations : ['userProjects'], where : { id: userId }})
+  }
+
+  getUserProjects(projectId : number): Promise<Project[]> {
+    return this.projectRepository.find({relations : ['userProjects'], where : { id: projectId }});
   }
 
   addUserToProject(userId : number, projectId : number) {

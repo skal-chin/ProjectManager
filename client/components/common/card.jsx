@@ -1,4 +1,3 @@
-import { description } from "commander";
 import{useContext, useEffect, useState} from "react";
 
 export const Card = ({ isProject, Title, Description, Deadline, isAssigned, ownerIcon, incompleteTasks, completeTasks }) => {
@@ -20,7 +19,7 @@ export const Card = ({ isProject, Title, Description, Deadline, isAssigned, owne
 
       {isProject &&
         <div className="pb-3">
-          <p className="text-justify">{ description }</p>
+          <p className="text-justify">{ Description }</p>
         </div>
       }
 

@@ -24,7 +24,13 @@ export class ProjectsController {
 
   @Get('/projects')
   public async index(@JwtBody() jwtBody : JwtBodyDto) {
-    const projects = await this.projectsService.findAllForUser(jwtBody.userId);
+
+    // const oprojects = await this.projectsService.findAllForUser(jwtBody.userId);
+    // console.log(oprojects);
+    
+    const projects = await this.projectsService.getUserProjects(jwtBody.userId);
+    console.log(projects);
+    
     return { projects };
   }
 

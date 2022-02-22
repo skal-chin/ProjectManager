@@ -33,8 +33,9 @@ export const Home = () => {
     const res = await api.get('/users/me');
     setUser(res.user);
     setLoading(false);
-    // const proj = await api.get('projects/');
-    // setProjects(proj);
+    const proj = await api.get('projects/');
+    console.log(proj);
+    setProjects(proj.projects);
   }, []);
 
   const logout = async () => {
