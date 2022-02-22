@@ -63,7 +63,7 @@ export const Home = () => {
       {/* <CreationModal createType="Project"></CreationModal> */}
 
       <Card Title="This is a Title" Description="Some description that is longer and longer so I can see how it's going to fit in the context of the box. I want it to be longer so I can decide where to put the status button of this task card thing that I've been put in charge of." 
-      Deadline="None" isAssigned="chin"></Card>
+      Deadline="None" isAssigned="chin" ownerIcon="" incompleteTasks="" completeTasks=""></Card>
 
     </div>
   );

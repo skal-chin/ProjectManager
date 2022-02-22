@@ -1,7 +1,7 @@
 import { description } from "commander";
 import{useContext, useEffect, useState} from "react";
 
-export const Card = ({ Title, Description, Deadline, isAssigned, ownerIcon, incompleteTasks, completeTasks }) => {
+export const Card = ({ isProject, Title, Description, Deadline, isAssigned, ownerIcon, incompleteTasks, completeTasks }) => {
   
   const [check, setCheck] = useState(false);
   const isComplete = async () => {
@@ -10,11 +10,11 @@ export const Card = ({ Title, Description, Deadline, isAssigned, ownerIcon, inco
 
   return (
 
-    <div className="bg-blue-600 pt-3 pl-3 pr-3 m-2 shadow-md rounded-lg">
+    <div className="bg-white pt-3 pl-3 pr-3 m-2 shadow-md rounded-lg">
       <div className="flex justify-between mb-2">
         <span className="align-text-left text-2xl pb-1">{ Title }</span>
-        <button onClick={isComplete} className={check ? "bg-red-500 hover:bg-red-600 text-white text-center py-1 px-3 rounded-full" :
-                                                        "bg-green-500 hover:bg-green-600 text-white text-center py-1 px-3 rounded-full"}>
+        <button onClick={isComplete} className={check ? "bg-purple-400 hover:bg-purple-500 text-white text-center py-1 px-3 rounded-full" :
+                                                        "bg-blue-400 hover:bg-blue-500 text-white text-center py-1 px-3 rounded-full"}>
           { check ? "incomplete" : "complete" }</button>
       </div>
 

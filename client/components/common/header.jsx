@@ -3,9 +3,9 @@ import { Button } from "./button";
 
 export const Header = ({ logout, currentUser, projectTitle, projectOwner}) => {
   return (
-    <div className="font-bold text-xl flex justify-between rounded-b-lg bg-pink-600 text-white h-24">
+    <div className="flex justify-between bg-indigo-500 text-white shadow-lg h-30 pb-3">
       <div className="m-2 flex-col">
-        <div><a href="/" className="p-1">{ currentUser }</a></div>
+        <div className="font-bold text-3xl"><a href="/" className="p-1">Hello, { currentUser }!</a></div>
         <div><button className="p-1" type="button" onClick={logout}>Logout</button></div>
       </div>
       {projectOwner && 
