@@ -1,7 +1,7 @@
-import { Link } from "memfs/lib/node";
-import { Button } from "./button";
+import { useNavigate } from "react-router";
 
 export const Header = ({ logout, currentUser, projectTitle, projectOwner}) => {
+  const navigate = useNavigate();
   return (
     <div className="flex justify-between bg-indigo-500 text-white shadow-lg h-30 pb-3">
       <div className="m-2 flex-col">

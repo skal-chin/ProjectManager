@@ -6,7 +6,7 @@ import {useHistory, useParams} from 'react-router-dom';
 
 export const ProjectPage = () => {
   const api = useContext(ApiContext);
-  const { projectId } = useParams();
+  const { id } = useParams();
 
   // let project = await api.get(`projects/${id}`);
   return (<div>Hello World</div>);
