@@ -21,30 +21,30 @@ export const CreationModal = ({ createType, publish, cancel, setTitle, setDesc, 
   };
 
   return (
-    <div className="container flex flex-col bg-indigo-100 mx-24">
-      <div className="flex flex-col mx-auto">
-        <input className={"rounded-lg border-2 border-black border-r m-2"} 
+    <div className="flex flex-col bg-indigo-200 mx-24 p-2 rounded-lg shadow-lg">
+      <div className="flex flex-col">
+        <input className={"border-2 border-indigo-400 border-r m-1 p-1 focus:outline-none"} 
           type="text" 
           name="title"
           onChange={(e) => setTitle(e.target.value)} 
           placeholder={ createType + " Title"} />
 
         <textarea 
-          className="rounded-lg border-2 border-black m-2 w-80" 
+          className="border-2 border-indigo-400 border-r m-1 p-1 focus:outline-none" 
           type="text" 
           name="description" 
           onChange={(e) => setDesc(e.target.value)}
           placeholder={ createType + " Description"}/>
 
         <input 
-          className="rounded-lg border-2 border-black m-2 w-80" 
+          className="border-2 border-indigo-400 border-r m-1 p-1 focus:outline-none"
           type="text" 
           name="deadline"
           onChange={(e) => setDeadline(e.target.value)} 
           placeholder={ createType + " Deadline"} />
 
         <input 
-          className="rounded-lg border-2 border-black m-2 w-80" 
+          className="border-2 border-indigo-400 border-r m-1 p-1 focus:outline-none"
           type="text"
           onChange={(e) => setOtherUser(e.target.value)} 
           placeholder="Invite User"/>
@@ -80,13 +80,17 @@ export const CreationModal = ({ createType, publish, cancel, setTitle, setDesc, 
       }
  */}
 
-      <div className="m-2 mt-4 flex justify-between">
-        <button className="bg-red-600 rounded-md text-xl p-2" onClick={ cancel }>Cancel</button>
-        <button className="bg-green-600 rounded-md text-xl p-2" onClick={ publish }>Publish</button>
+      <div className="m-2 mt-4 flex justify-end">
+        <div className="p-1">
+          <button className="bg-purple-400 hover:bg-purple-500 text-white text-center py-1 px-3 rounded-full" onClick={ cancel }>Cancel</button>
+        </div>
+        <div className="p-1">
+          <button className="bg-blue-400 hover:bg-blue-500 text-white text-center py-1 px-3 rounded-full" onClick={ publish }>Publish</button>
+        </div>
       </div>
 
       {errors &&
-        <div className="text-red-600">
+        <div className="text-pink-600">
           <ul>
             {errors.map((message) => (
               <li key={errors.indexOf(message)}>{message}</li>
@@ -96,7 +100,7 @@ export const CreationModal = ({ createType, publish, cancel, setTitle, setDesc, 
       }
 
       {success &&
-      <div className="text-green-600">
+      <div className="text-indigo-600">
         <p>{ success }</p>
       </div>
       }

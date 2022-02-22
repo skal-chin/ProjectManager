@@ -153,7 +153,7 @@ export const Home = () => {
       }
       
       {projects.length === 0 &&
-        <div className='bg-indigo-100 mx-24 my-4'>
+        <div className='bg-indigo-100 mx-24 p-1 my-4 rounded-lg shadow-lg'>
           <p className='flex justify-center'>You have no current projects</p>
         </div>
       }

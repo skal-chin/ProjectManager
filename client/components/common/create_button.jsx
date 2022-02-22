@@ -4,7 +4,7 @@ export const CreateButton = ({ desc, onClick }) => {
       type='button' 
       onClick={ onClick } 
       className="cursor-pointer 
-      transition ease-in .4s bg-green-700 
+      transition ease-in .4s border-dashed border-4 border-white
       font-bold 
       rounded 
       m-2 
@@ -12,8 +12,9 @@ export const CreateButton = ({ desc, onClick }) => {
       text-xl 
       max-w-full 
       text-center 
-      hover:bg-green-900 
-      active:bg-green-300 
+      hover:bg-pink-300
+      hover:border-solid border-4 border-white
+      active:bg-pink-200
       text-white">
       Create { desc } +
     </div>
