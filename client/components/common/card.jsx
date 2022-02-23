@@ -79,6 +79,7 @@ export const Card = ({ isProject, Title, ProjectId, Description, Deadline, owner
 
   return (
 
+
     <div className="bg-purple-200 pt-3 pl-3 pr-3 m-2 shadow-md rounded-lg">
       <div className="flex justify-between mb-2">
       <span onClick={() => navigate(`${cardPath}${ProjectId}`)} className="cursor-pointer align-text-left text-2xl pb-1">{ Title }</span>
