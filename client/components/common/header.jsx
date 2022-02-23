@@ -12,9 +12,9 @@ export const Header = ({ logout, currentUser, projectTitle, projectOwner}) => {
         <div><button className="p-1 font-style: italic" type="button" onClick={logout}>logout</button></div>
       </div>
       {projectOwner && 
-      <div className="m-2 flex-col">
-        <div className="p-1">{ projectTitle }</div>
-        <div className="p-1">{ projectOwner }</div>
+      <div className="m-2 flex-col text-right bg-pink-400 rounded-lg drop-shadow-lg">
+        <div className="p-1 text-xl">Project Title: { projectTitle }</div>
+        <div className="p-1">Project Owner: { projectOwner }</div>
       </div>
       }
 
