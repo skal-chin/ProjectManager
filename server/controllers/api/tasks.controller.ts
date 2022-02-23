@@ -10,7 +10,7 @@ class TaskPostBody {
   deadline: string; 
   title: string;
   isComplete: boolean;
-  assignedTo: string;
+  assignTo: string;
   projectId: number;
 }
 
@@ -21,6 +21,8 @@ export class TasksController {
   @Get('/tasks/:id')
   public async index(@Param('id') projectId : string) {
     const tasks = await this.tasksService.findAllForProject(parseInt(projectId, 10));
+    console.log(tasks);
+    
     return { tasks };
   }
 
@@ -32,9 +34,11 @@ export class TasksController {
     task.title = body.title;
     task.isComplete = false;
     task.projectId = body.projectId;
+    console.log(body);
+    
 
-    if (body.assignedTo) {
-      task.assignedTo = body.assignedTo;
+    if (body.assignTo) {
+      task.assignedTo = body.assignTo;
     }
     task = await this.tasksService.createTask(task);
     return { task };
@@ -58,6 +62,10 @@ export class TasksController {
     task.description = body.description;
     task.deadline = body.deadline;
     task.isComplete = body.isComplete;
+
+    if (body.assignTo) {
+      task.assignedTo = body.assignTo;
+    }
 
     this.tasksService.updateTask(task);
     return { success : true }

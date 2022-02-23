@@ -12,7 +12,7 @@ export class TasksService {
 
   findAllForProject(projectId: number): Promise<Task[]> {
     return this.taskRepository.find({
-      where: { projectId },
+      where: { projectId : projectId },
     });
   }
 

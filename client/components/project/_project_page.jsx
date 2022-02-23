@@ -11,7 +11,6 @@ import { CreateButton } from "../common/create_button";
 export const ProjectPage = () => {
   const api = useContext(ApiContext);
   const { id } = useParams();
-  console.log(id);
 
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
@@ -30,11 +29,14 @@ export const ProjectPage = () => {
     const res = await api.get('/users/me');
     setUser(res.user);
     setProject((await api.get(`projects/${id}`)).project);
-    const taskList = await api.get(`tasks/${id}`)
-    setTasks(taskList);
-    console.log(tasks);
+    const taskList = await api.get(`tasks/${id}`);
+    console.log(taskList);
+    setTasks(taskList.tasks);
     setLoading(false);
   }, []);
+
+  // console.log('----------');
+  // console.log('Tasks: ', tasks.tasks);
 
   const logout = async () => {
     const res = await api.del('/sessions');
@@ -108,8 +110,8 @@ export const ProjectPage = () => {
     return;
   }
 
-  const setComplete = async (project) => {
-    task.isComplete = !project.isComplete;
+  const setComplete = async (task) => {
+    task.isComplete = !task.isComplete;
 
     const taskBody = {
       title : task.title,
@@ -168,27 +170,23 @@ export const ProjectPage = () => {
   }
 
   {tasks.length > 0 &&
-  <div>
-    {tasks.map((task) => (
-      
-      <Card
-      key={task.task.id}
-      isProject={false}
-      Title={task.task.title}
-      ProjectId={task.task.id}
-      Description={task.task.description}
-      Deadline={task.task.deadline}
-      isProjectComplete={task.task.isComplete}
-      setComplete={() => setComplete(task.task)}
-      >
-      </Card>
-    ))}
-  </div>
-
-
+    <div>
+      {tasks.map((task) => (
+        
+        <Card
+        key={task.id}
+        isProject={false}
+        Title={task.title}
+        ProjectId={task.id}
+        Description={task.description}
+        Deadline={task.deadline}
+        isProjectComplete={task.isComplete}
+        setComplete={() => setComplete(task)}
+        assignedUser={task.assignedTo}
+        >
+        </Card>
+      ))}
+    </div>
   }
-  
-
-
   </div>);
 }
