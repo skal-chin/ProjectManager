@@ -37,6 +37,11 @@ export class AddProject1643857089019 implements MigrationInterface {
             type: 'int',
             isNullable: false,
           },
+          {
+            name: 'ownerEmail',
+            type: 'text',
+            isNullable: false,
+          },
         ],
       }),
     );

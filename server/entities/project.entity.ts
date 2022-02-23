@@ -21,6 +21,9 @@ export class Project {
   @Column({ nullable: false})
   ownerId: number
 
+  @Column({ nullable: false})
+  ownerEmail: string
+
   @OneToMany(() => UserProject, (userProject) => userProject.project, { cascade: true})
   userProjects: UserProject[];
 }

@@ -25,17 +25,23 @@ export class ProjectsController {
 
   @Get('/projects')
   public async index(@JwtBody() jwtBody : JwtBodyDto) {
-
-    const projects = await this.projectsService.findAllForUser(jwtBody.userId);
-    console.log(projects);
-    
+    const projects = await this.projectsService.findAllForUser(jwtBody.userId);    
     return { projects };
   }
 
   @Get('/projects/:id')
   public async show(@Param('id') id : string, @JwtBody() jwtBody : JwtBodyDto) {
     const project = await this.projectsService.findProjectById(parseInt(id, 10));
+    
     return { project };
+  }
+
+  @Get('/project_owner/:id')
+  public async showOwnerEmail(@Param('id') id : string, @JwtBody() jwtBody : JwtBodyDto) {
+    const project = await this.projectsService.findProjectById(parseInt(id, 10));
+    const projectOwner = (await this.usersService.find(jwtBody.userId)).email;
+
+    return { projectOwner };
   }
 
   @Post('/projects')
@@ -46,6 +52,7 @@ export class ProjectsController {
     project.deadline = body.deadline;
     project.isComplete = false;
     project.ownerId = jwtBody.userId;
+    project.ownerEmail = (await this.usersService.find(jwtBody.userId)).email;
 
     const createdProject = await this.projectsService.createProject(project);
     

@@ -10,7 +10,7 @@ class TaskPostBody {
   deadline: string; 
   title: string;
   isComplete: boolean;
-  assignedTo: number;
+  assignedTo: string;
   projectId: number;
 }
 
@@ -18,9 +18,9 @@ class TaskPostBody {
 export class TasksController {
   constructor(private tasksService: TasksService) {}
 
-  @Get('/tasks')
-  public async index(@JwtBody() jwtBody: JwtBodyDto) {
-    const tasks = await this.tasksService.findAllForProject(jwtBody.userId);
+  @Get('/tasks/:id')
+  public async index(@Param('id') projectId : string) {
+    const tasks = await this.tasksService.findAllForProject(parseInt(projectId, 10));
     return { tasks };
   }
 
@@ -31,8 +31,11 @@ export class TasksController {
     task.deadline = body.deadline;
     task.title = body.title;
     task.isComplete = false;
-    task.assignedTo = body.assignedTo;
     task.projectId = body.projectId;
+
+    if (body.assignedTo) {
+      task.assignedTo = body.assignedTo;
+    }
     task = await this.tasksService.createTask(task);
     return { task };
   }
@@ -47,9 +50,14 @@ export class TasksController {
     return { success: true };
   }
 
-  @Put('/taskss/:id')
-  public async update(@Param('id') id : string, @JwtBody() jwtBody : JwtBodyDto) {
+  @Put('/tasks/:id')
+  public async update(@Param('id') id : string, @JwtBody() jwtBody : JwtBodyDto, @Body() body : TaskPostBody) {
     const task = await this.tasksService.findTaskById(parseInt(id, 10));
+
+    task.title = body.title;
+    task.description = body.description;
+    task.deadline = body.deadline;
+    task.isComplete = body.isComplete;
 
     this.tasksService.updateTask(task);
     return { success : true }

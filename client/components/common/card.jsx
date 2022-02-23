@@ -1,10 +1,13 @@
 import{useContext, useEffect, useState} from "react";
+import { ApiContext } from "../../utils/api_context";
 import { useNavigate } from 'react-router';
 
-export const Card = ({ isProject, Title, ProjectId, Description, Deadline, isAssigned, ownerIcon, isProjectComplete, setComplete, incompleteTasks, completeTasks }) => {
+export const Card = ({ isProject, Title, ProjectId, Description, Deadline, ownerIcon, isProjectComplete, setComplete, incompleteTasks, completeTasks }) => {
   const navigate = useNavigate();
+  const api = useContext(ApiContext);
   const [check, setCheck] = useState(isProjectComplete);
   const [cardPath, setCardPath] = useState('');
+  const [taskUser, setTaskUser] = useState('')
   
   useEffect(async () => {
     if (isProject) {
@@ -12,8 +15,8 @@ export const Card = ({ isProject, Title, ProjectId, Description, Deadline, isAss
     }
     else {
       setCardPath('task_detail/');
+      setTaskUser((await api.get(`/tasks/${ProjectId}`)).assignedTo)
     }
-
   }, []);
   
   const isComplete = async () => {
@@ -38,11 +41,19 @@ export const Card = ({ isProject, Title, ProjectId, Description, Deadline, isAss
         </div>
       }
 
-      <div className="flex justify-between pb-3">
-        <span className=""> { ownerIcon }{ isAssigned } </span>
-        <span className="text-xs  flex items-end"> { Deadline } </span>
-      </div>
+      {!isProject &&
+        <div className="flex justify-between pb-3">
+          {taskUser &&
+            <span className=""> { ownerIcon }{ taskUser } </span>
+          }
 
+          {!taskUser &&
+            <button onClick={ assignUser }>Assign a User</button>
+          }
+          
+          <span className="text-xs flex items-end"> { Deadline } </span>
+        </div>
+      }
       
 
     </div>

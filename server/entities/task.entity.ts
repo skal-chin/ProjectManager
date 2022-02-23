@@ -17,8 +17,8 @@ export class Task {
   @Column({ nullable: false })
   isComplete: Boolean;
 
-  @Column({ nullable: false })
-  assignedTo: number;
+  @Column({ nullable: true })
+  assignedTo: string;
 
   @Column({ nullable: false })
   projectId: number;

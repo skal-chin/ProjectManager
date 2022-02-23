@@ -4,7 +4,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { config } from './database/config';
 import { UsersModule } from './modules/users.module';
-import { ProjectsModule } from './modules/projects.module'
+import { ProjectsModule } from './modules/projects.module';
+import { TasksModule } from './modules/tasks.module';
 import { AuthGuard } from './providers/guards/auth.guard';
 import { RolesGuard } from './providers/guards/roles.guard';
 import { JwtService } from './providers/services/jwt.service';
@@ -14,7 +15,7 @@ import { ProjectsService } from './providers/services/projects.services';
 import { GuardUtil } from './providers/util/guard.util';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(config), UsersModule, ProjectsModule],
+  imports: [TypeOrmModule.forRoot(config), UsersModule, ProjectsModule, TasksModule],
   controllers: [AppController],
   providers: [
     UsersService,
