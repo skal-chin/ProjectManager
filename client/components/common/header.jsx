@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router";
 import image from "../../img/ditto.png";
+import img from "../../img/moon.png";
 
 
 export const Header = ({ logout, currentUser, projectTitle, projectOwner}) => {
@@ -14,7 +15,11 @@ export const Header = ({ logout, currentUser, projectTitle, projectOwner}) => {
       {projectOwner && 
       <div className="m-2 flex-col text-right bg-pink-400 rounded-lg drop-shadow-lg">
         <div className="p-1 text-xl">Project Title: { projectTitle }</div>
-        <div className="p-1">Project Owner: { projectOwner }</div>
+        <div>
+          <img src={img} alt="moon" /> 
+          <span className="p-1">Project Owner: { projectOwner }</span>
+        </div>
+        
       </div>
       }
 
