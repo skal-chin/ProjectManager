@@ -106,7 +106,7 @@ export const ProjectPage = () => {
     if (task) {
       setSuccess('Task Created! Make a new task or press cancel');
     }
-    closeProjectModal();
+    closeTaskModal();
     return;
   }
 
