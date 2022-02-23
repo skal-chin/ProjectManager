@@ -1,9 +1,12 @@
 import { useNavigate } from "react-router";
+import image from "../../img/ditto.png";
+
 
 export const Header = ({ logout, currentUser, projectTitle, projectOwner}) => {
   const navigate = useNavigate();
   return (
-    <div className="flex justify-between bg-indigo-500 text-white shadow-lg h-30 pb-3">
+    <div className="flex justify-between text-white shadow-lg h-35 pb-3"
+    style={{ backgroundImage:`url(${image})` }}>
       <div className="m-2 flex-col">
         <div className="font-bold text-3xl"><a href="/" className="p-1">Hello, { currentUser }!</a></div>
         <div><button className="p-1 font-style: italic" type="button" onClick={logout}>logout</button></div>
