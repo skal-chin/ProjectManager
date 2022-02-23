@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { ApiContext } from "../../utils/api_context";
+import { AuthContext } from '../../utils/auth_context';
 import { RolesContext } from "../../utils/roles_context";
 import {useHistory, useParams} from 'react-router-dom';
 import { Header } from "../common/header";
@@ -10,6 +11,8 @@ import { CreateButton } from "../common/create_button";
 
 export const ProjectPage = () => {
   const api = useContext(ApiContext);
+  const [, setAuthToken] = useContext(AuthContext);
+
   const { id } = useParams();
 
   const [loading, setLoading] = useState(true);

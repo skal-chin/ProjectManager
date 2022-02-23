@@ -13,13 +13,16 @@ export const Card = ({ isProject, Title, ProjectId, Description, Deadline, owner
   const [addUser, setUser] = useState('');
   const [errors, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [assignUserPath, setUserPath] = useState('');
   
   useEffect(async () => {
     if (isProject) {
       setCardPath('project_detail/');
+      setUserPath('projects/')
     }
     else {
       setCardPath('task_detail/');
+      setUserPath('tasks/')
       setTaskUser(assignedUser);
     }
   }, []);
@@ -60,7 +63,12 @@ export const Card = ({ isProject, Title, ProjectId, Description, Deadline, owner
       assignTo: addUser,
     };
 
-    const task = await api.put(`/tasks/${ProjectId}`, taskBody);
+    const task = await api.put(`/${assignUserPath}${ProjectId}`, taskBody);
+
+    if (task.statusCode && task.statusCode === 401) {
+      setError('You are not authorized to make this change');
+      return;
+    }
 
     setSuccess(`You have added ${addUser} to the task`);
     setForm(false);
@@ -77,11 +85,13 @@ export const Card = ({ isProject, Title, ProjectId, Description, Deadline, owner
         <button onClick={ isComplete } className={check ? "bg-blue-400 hover:bg-blue-500 text-white text-center py-1 px-3 rounded-full" :
                                                           "bg-red-400 hover:bg-red-500 text-white text-center py-1 px-3 rounded-full" }>
           { check ? "complete" : "incomplete" }</button>
+          
       </div>
 
       {isProject &&
         <div className="pb-3">
           <p className="text-justify">{ Description }</p>
+          
         </div>
       }
 
@@ -90,8 +100,9 @@ export const Card = ({ isProject, Title, ProjectId, Description, Deadline, owner
           {taskUser &&
             <span className=""> { ownerIcon }{ taskUser } </span>
           }
-
-          {taskUser === null && !assignForm &&
+        </div>
+      }
+       {taskUser === null && !assignForm &&
             <UserButton onClick={ openForm }>Assign a User</UserButton>
           }
 
@@ -127,8 +138,6 @@ export const Card = ({ isProject, Title, ProjectId, Description, Deadline, owner
           }
           
           <span className="text-xs flex items-end"> { Deadline } </span>
-        </div>
-      }
       
 
     </div>

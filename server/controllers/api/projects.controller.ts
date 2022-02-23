@@ -14,6 +14,7 @@ class ProjectPostBody {
   ownerId : number;
   userInvite : string;
   isComplete : boolean;
+  assignTo : string;
 }
 
 @Controller()
@@ -91,6 +92,18 @@ export class ProjectsController {
     project.description = body.description;
     project.deadline = body.deadline;
     project.isComplete = body.isComplete;
+
+    if (body.assignTo) {
+      
+      const getUser = await this.usersService.findByEmail(body.assignTo);
+      const otherUser = getUser[0];
+      
+      const otherUserProject = new UserProject();
+      otherUserProject.projectId = project.id;
+      otherUserProject.userId = otherUser.id;
+      otherUserProject.contextId = Math.random.toString().substring(2, 8);
+      await this.projectsService.createUserProject(otherUserProject);
+    }
 
     this.projectsService.updateProject(project);
     return { success : true }
